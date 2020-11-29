@@ -1,0 +1,31 @@
+{{#if platoonList.length}}
+<h2>Доступны</h2>
+<div class="row">
+    {{#each platoonList}}
+
+    <div class="col s12 m3">
+        <article class="card">
+            <div class="card-image waves-effect waves-block waves-light">
+                <img class="activator spacemarine-photo" src="{{photo}}" title="{{name}}">
+            </div>
+            <div class="card-content">
+                <span class="card-title grey-text text-darken-4">Name: {{name}}</span>
+                <span>Platoon id: {{platoonId}}</span>
+                <span>Cost: {{cost}}</span>
+            </div>
+            <div class="card-action flex-inline">
+                <a href="/platoon/{{id}}">Bio</a>
+                <a href="/platoon/{{id}}/edit?allow=true">Worckout</a>
+                <form action="/recruit/add" method="POST">
+                    <input type="text" name="id" value="{{id}}" hidden>
+                    <button class="btn">Recruit</button>
+                </form>
+            </div>
+        </article>
+    </div>
+
+    {{/each}}
+</div>
+{{else}}
+<h2>Все на Кабале</h2>
+{{/if}}

@@ -1,0 +1,37 @@
+<div class="navbar-fixed">
+    <nav>
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo">
+                <img class="brand-logo__img" src="./img/logo.png" alt="">
+            </a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {{#if isHome}}
+                <li class="active"><a href="/">Home</a></li>
+                {{else}}
+                <li><a href="/">Home</a></li>
+                {{/if}}
+
+                {{#if isAdd}}
+                <li class="active"><a href="/add">Add</a></li>
+                {{else}}
+                <li><a href="/add">Add</a></li>
+                {{/if}}
+
+                {{#if isPlatoon}}
+                <li class="active"><a href="/platoon">Platoon</a></li>
+                {{else}}
+                <li><a href="/platoon">Platoon</a></li>
+                {{/if}}
+
+                {{#if isRecruit}}
+                <li class="active"><a href="/recruit">Recruit</a></li>
+                {{else}}
+                <li><a href="/recruit">Recruit</a></li>
+                {{/if}}
+
+
+            </ul>
+        </div>
+    </nav>
+
+</div>

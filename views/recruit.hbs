@@ -1,0 +1,23 @@
+<h1>Recruit</h1>
+
+{{#if order.recruit.length}}
+    <table class="recruit-table">
+        <thead>
+            <td>Name</td>
+            <td>Count</td>
+            <td>Change</td>
+        </thead>
+        {{#each order.recruit}}
+        <tr>
+            <td>{{name}}</td>
+            <td>{{count}}</td>
+            <td>
+                <button class="btn btn-small btn-remove" data-id="{{id}}">delete</button>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <h4>Score: {{order.score}}</h4>
+{{else}}
+    <h3>No assembled Crusade</h3>
+{{/if}}

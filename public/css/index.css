@@ -1,0 +1,37 @@
+:root {
+    --main-color:#182b53;
+}
+
+nav {
+    background-color: var(--main-color);
+}
+
+.nav-wrapper {
+    padding: 0 2rem;
+}
+
+.brand-logo {
+    display: flex !important;
+    align-items: center;
+    height: 100%;
+}
+
+.brand-logo__img {
+    width: 170px;
+    height: 40px;
+    object-fit: contain;
+}
+
+.flex-inline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.spacemarine-photo {
+    height: 349px;
+}
+
+.btn {
+    background: var(--main-color);
+}

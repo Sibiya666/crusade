@@ -1,0 +1,29 @@
+<form action="/add" method="POST">
+    <div class="input-field">
+        <input id="name" name="name" type="text" class="validate" required>
+        <label for="name">Name</label>
+        <span class="helper-text" data-error="wrong" data-success="right">required field</span>
+    </div>
+
+    <div class="input-field">
+        <input id="platoonId" name="platoonId" type="number" class="validate" required>
+        <label for="platoonId">Platoon Id</label>
+        <span class="helper-text" data-error="wrong" data-success="right">required field</span>
+    </div>
+
+    <div class="input-field">
+        <input id="cost" name="cost" type="number" class="validate" required>
+        <label for="cost">Cost</label>
+        <span class="helper-text" data-error="wrong" data-success="right">required field</span>
+    </div>
+
+    <div class="input-field">
+        <input id="photo" name="photo" type="text" class="validate" required>
+        <label for="photo">Photo</label>
+        <span class="helper-text" data-error="wrong" data-success="right">required field</span>
+    </div>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <i class="material-icons right">send</i>
+    </button>
+</form>
