@@ -14,10 +14,10 @@
                 <span>Cost: {{cost}}</span>
             </div>
             <div class="card-action flex-inline">
-                <a href="/platoon/{{id}}">Bio</a>
-                <a href="/platoon/{{id}}/edit?allow=true">Worckout</a>
+                <a href="/platoon/{{_id}}">Bio</a>
+                <a href="/platoon/{{_id}}/edit?allow=true">Worckout</a>
                 <form action="/recruit/add" method="POST">
-                    <input type="text" name="id" value="{{id}}" hidden>
+                    <input type="text" name="id" value="{{_id}}" hidden>
                     <button class="btn">Recruit</button>
                 </form>
             </div>

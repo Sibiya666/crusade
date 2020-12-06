@@ -9,12 +9,17 @@ router.get('/', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     const { name, platoonId, photo, cost } = req.body
-    const spacemarine = new Spacemarine(name, platoonId, photo, cost);
-    
-    spacemarine.save();
-    res.redirect('/');
+    const spacemarine = new Spacemarine({ name, platoonId, photo, cost, incvisitorId: req.incvisitor });
+
+    try {
+        await spacemarine.save();
+        res.redirect('/');
+
+    } catch (e) {
+        console.log(e)
+    }
 });
 
 module.exports = router;

@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const Spacemarine = require('../models/spacemarine')
-const Recruit = require('../models/recruit');
 const router = Router();
 
 router.get('/', async (req, res) => {
@@ -15,8 +14,7 @@ router.get('/', async (req, res) => {
 
 
 router.post('/add', async (req, res) => {
-
-    const spacemarine = await Spacemarine.getById(req.body.id);
+    const spacemarine = await Spacemarine.findById(req.body.id);
     await Recruit.add(spacemarine);
 
     res.redirect('/recruit');

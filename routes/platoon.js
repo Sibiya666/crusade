@@ -1,10 +1,9 @@
 const { Router } = require('express');
-const fs = require('fs').f
 const router = Router();
 const Spacemarine = require('../models/spacemarine');
 
 router.get('/', async (req, res) => {
-    const platoonList = await Spacemarine.getAll();
+    const platoonList = await Spacemarine.find();
 
     res.render('platoon', {
         isPlatoon: true,
@@ -13,7 +12,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-    const spacemarine = await Spacemarine.getById(req.params.id);
+    const spacemarine = await Spacemarine.findById(req.params.id);
     res.render('spacemarine', {
         title: spacemarine.name,
         isPlatoon: true,
@@ -26,7 +25,7 @@ router.get('/:id/edit', async (req, res) => {
         return res.redirect('/')
     }
 
-    const spacemarine = await Spacemarine.getById(req.params.id);
+    const spacemarine = await Spacemarine.findById(req.params.id);
     res.render('spacemarine-workout', {
         title: `Trening ${spacemarine.name}`,
         isPlatoon: true,
@@ -35,14 +34,23 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 router.post('/edit', async (req, res) => {
-    const { name, photo, id, platoon } = req.body;
+    const { name, photo, id, platoonId, cost } = req.body;
 
-    await Spacemarine.update(name, photo, id, platoon);
-    
-    res.render('/', {
-        isPlatoon: true,
-        platoonList
-    })
+    try {
+        await Spacemarine.findByIdAndUpdate(id, { name, photo, platoonId, cost });
+        res.redirect('/');
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+router.post('/remove', async (req, res) => {
+    try {
+        await Spacemarine.deleteOne({ _id: req.body.id });
+        res.redirect('platoon');
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 module.exports = router;
