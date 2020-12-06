@@ -1,53 +1,27 @@
-const { nanoid } = require('nanoid');
-const fs = require('fs').promises;
-const path = require('path');
+const { Schema, model } = require('mongoose');
 
-const PATH_TO_PLATOON_LIST = path.join(__dirname, '..', 'db', 'platoon-list.json');
+const spacemarinSchema = new Schema({
+    name: {
+        type: String,
+        require: true
+    },
+    platoonId: {
+        type: Number,
+        require: true
+    },
+    photo: {
+        type: String,
+        require: true
+    },
+    cost: {
+        type: Number,
+        require: true
+    },
 
-class Spacemarine {
-    constructor(name, platoonId, photo, cost) {
-        this.name = name;
-        this.platoonId = platoonId;
-        this.photo = photo;
-        this.cost = cost
-        this.id = nanoid()
+    incvisitorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Incvisitor'
     }
+});
 
-    async save() {
-        const newPlatoonList = await Spacemarine.getAll();
-
-        newPlatoonList.push({
-            name: this.name,
-            platoonId: this.platoonId,
-            photo: this.photo,
-            id: this.id,
-            cost: this.cost
-        });
-
-       await Spacemarine.writeFile(PATH_TO_PLATOON_LIST, newPlatoonList)
-    }
-
-    static async getAll() {
-      return JSON.parse( await fs.readFile(PATH_TO_PLATOON_LIST, 'utf-8'));
-    }
-
-    static async getById(id) {
-        const all = await Spacemarine.getAll();
-        return all.find(spacemarine => spacemarine.id === id);
-    }
-
-    static async update(name, photo, id, platoonId) {
-        const platoon = await Spacemarine.getAll();
-        const findSpacemarinteIndex = platoon.findIndex(fidnSpacemarine => fidnSpacemarine.id === id);
-    
-        platoon[findSpacemarinteIndex] = { name, photo, id, platoonId, cost };
-
-        await Spacemarine.writeFile(PATH_TO_PLATOON_LIST, platoon);
-    } 
-
-    static async writeFile(path, platoon) {
-        await fs.writeFile(path, JSON.stringify(platoon))
-    }
-}
-
-module.exports = Spacemarine;
+module.exports = model('spacemarine', spacemarinSchema);

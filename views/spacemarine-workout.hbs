@@ -1,4 +1,4 @@
-<form action="/platoon/edit" method="POST">
+<form action="/platoon/edit" method="POST" class="worckout-form">
     <div class="input-field">
         <input id="name" name="name" type="text" class="validate" value="{{spacemarine.name}}" required>
         <label for="name">Name</label>
@@ -25,7 +25,10 @@
 
     <input class="hidden" type="text" name="id" value="{{spacemarine.id}}" hidden>
 
-    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right">send</i>
-    </button>
+    <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
+</form>
+
+<form action="/platoon/remove" method="POST">
+    <input type="text" name="id" value="{{spacemarine.id}}" hidden>
+    <button type="submit" class="btn waves-effect waves-light" >DEMOTE</button>
 </form>

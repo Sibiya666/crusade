@@ -35,3 +35,7 @@ nav {
 .btn {
     background: var(--main-color);
 }
+
+.worckout-form {
+    margin-bottom: 2rem;
+}
