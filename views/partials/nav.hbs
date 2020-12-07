@@ -29,7 +29,11 @@
                 <li><a href="/recruit">Recruit</a></li>
                 {{/if}}
 
-
+                {{#if isCrusade}}
+                <li class="active"><a href="/crusade">Crusade</a></li>
+                {{else}}
+                <li><a href="/crusade">Crusade</a></li>
+                {{/if}}
             </ul>
         </div>
     </nav>

@@ -12,12 +12,16 @@
             <td>{{name}}</td>
             <td>{{count}}</td>
             <td>
-                <button class="btn btn-small btn-remove" data-id="{{id}}">delete</button>
+                <button class="btn btn-small btn-remove" data-id="{{_id}}">delete</button>
             </td>
         </tr>
         {{/each}}
     </table>
     <h4>Score: {{order.score}}</h4>
+
+    <form action="crusade" method="POST">
+        <button class="btn btn-small" type="submit">CRUSADE</button>
+    </form>
 {{else}}
     <h3>No assembled Crusade</h3>
 {{/if}}
