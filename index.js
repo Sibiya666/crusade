@@ -9,9 +9,9 @@ const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const platoonRoutes = require('./routes/platoon');
 const recruitRoutes = require('./routes/recruit');
+const crusadeRoutes = require('./routes/crusade');
 
-const Incvisitor = require('./models/incvisitor');
-
+const Inqvisitor = require('./models/inqvisitor');
 
 const PORT = process.env.PORT || 3000;
 const DB_URL = 'mongodb+srv://sibiya666:ckFRrZV33Dck1G2u@cluster0.bg7mz.mongodb.net/spacemarine?retryWrites=true&w=majority';
@@ -45,7 +45,7 @@ async function start() {
 app.engine('hbs', hbs);
 app.set('view engine', 'hbs');
 
-app.use(addIncvisitorToReq);
+app.use(addinqvisitorToReq);
 
 app.use(exppress.static(path.join(__dirname, 'public')));
 app.use(exppress.urlencoded({ extended: false }));
@@ -54,25 +54,25 @@ app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/platoon', platoonRoutes);
 app.use('/recruit', recruitRoutes)
+app.use('/crusade', crusadeRoutes)
 
 start();
 
-
 async function userConect() {
     try {
-        const candidate = await Incvisitor.findOne();
+        const candidate = await Inqvisitor.findOne();
 
         if (candidate) {
             return;
         }
 
-        const incvisitor = new Incvisitor({
+        const inqvisitor = new Inqvisitor({
             email: 'pipin@mail.ru',
             name: 'Pipin',
             recruit: { items: [] }
         });
 
-        incvisitor.save();
+        inqvisitor.save();
 
     } catch (e) {
         console.log(e)
@@ -80,10 +80,10 @@ async function userConect() {
 
 }
 
-async function addIncvisitorToReq(req, res, next) {
+async function addinqvisitorToReq(req, res, next) {
     try {
-        const incvisitor = await Incvisitor.findById('5fc92d65c40b9503846eccd5');
-        req.incvisitor = incvisitor;
+        const inqvisitor = await Inqvisitor.findById('5fccae0e256d4523e0cb0eaf');
+        req.inqvisitor = inqvisitor;
         next();
     } catch (e) {
         console.log(e)
