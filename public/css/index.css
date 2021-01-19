@@ -30,6 +30,7 @@ nav {
 
 .spacemarine-photo {
     height: 349px;
+    object-fit: contain;
 }
 
 .btn {
