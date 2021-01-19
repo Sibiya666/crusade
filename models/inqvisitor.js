@@ -68,4 +68,9 @@ inqvisitorSchema.methods.removeFromCrusade = function (id) {
   return this.save();
 };
 
+inqvisitorSchema.methods.clearRecruit = function () {
+  this.recruit = { items: [] };
+  return this.save();
+};
+
 module.exports = model("Inqvisitor", inqvisitorSchema);
