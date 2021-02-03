@@ -1,15 +1,19 @@
 const exppress = require('express');
 const Handlebars = require('handlebars')
 const expressHbs = require('express-handlebars');
+const session = require('express-session')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const path = require('path');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongodb-session')(session);
+const varMiddlevare = require('./middleware/var');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
 const platoonRoutes = require('./routes/platoon');
 const recruitRoutes = require('./routes/recruit');
 const crusadeRoutes = require('./routes/crusade');
+const loginRoutes = require('./routes/login');
 
 const Inqvisitor = require('./models/inqvisitor');
 
@@ -21,6 +25,11 @@ const hbs = expressHbs({
     defaultLayout: 'main',
     extname: 'hbs',
     handlebars: allowInsecurePrototypeAccess(Handlebars)
+})
+
+const mongoSessionStore = new MongoStore({
+    uri: DB_URL,
+    collection: 'session',
 })
 
 
@@ -45,16 +54,22 @@ async function start() {
 app.engine('hbs', hbs);
 app.set('view engine', 'hbs');
 
-app.use(addinqvisitorToReq);
-
 app.use(exppress.static(path.join(__dirname, 'public')));
 app.use(exppress.urlencoded({ extended: false }));
+app.use(session({
+    secret: 'someSecret',
+    resave: false,
+    saveUninitialized: true,
+    store: mongoSessionStore
+}));
+app.use(varMiddlevare);
 
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
 app.use('/platoon', platoonRoutes);
-app.use('/recruit', recruitRoutes)
-app.use('/crusade', crusadeRoutes)
+app.use('/recruit', recruitRoutes);
+app.use('/crusade', crusadeRoutes);
+app.use('/login', loginRoutes);
 
 start();
 
@@ -74,17 +89,6 @@ async function userConect() {
 
         inqvisitor.save();
 
-    } catch (e) {
-        console.log(e)
-    }
-
-}
-
-async function addinqvisitorToReq(req, res, next) {
-    try {
-        const inqvisitor = await Inqvisitor.findById('5fccae0e256d4523e0cb0eaf');
-        req.inqvisitor = inqvisitor;
-        next();
     } catch (e) {
         console.log(e)
     }

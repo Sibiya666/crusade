@@ -1,5 +1,7 @@
 const { Router } = require("express");
 const Spacemarine = require("../models/spacemarine");
+const auth = require('../middleware/auth');
+
 const router = Router();
 
 async function createOrder(req) {
@@ -17,7 +19,7 @@ async function createOrder(req) {
   return { recruit, score };
 }
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   res.render("recruit", {
     title: "Recruit",
     isRecruit: true,
@@ -25,7 +27,7 @@ router.get("/", async (req, res) => {
   });
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", auth, async (req, res) => {
   try {
     const spacemarine = await Spacemarine.findById(req.body.id);
     req.inqvisitor.addToCrusade(spacemarine);
@@ -36,7 +38,7 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.delete("/remove/:id", async (req, res) => {
+router.delete("/remove/:id", auth, async (req, res) => {
   req.inqvisitor.removeFromCrusade(req.params.id);
   res.status(200).json(await createOrder(req));
 });

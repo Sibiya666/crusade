@@ -1,8 +1,10 @@
 const { Router } = require("express");
-const router = Router();
 const Crusade = require("../models/crusade");
+const auth = require('../middleware/auth');
 
-router.get("/", async (req, res) => {
+const router = Router();
+
+router.get("/", auth, async (req, res) => {
   try {
     const crusadeList = await Crusade.find({
       "inqvisitor.inqvisitorId": req.inqvisitor._id,
@@ -19,7 +21,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const inqvisitor = await req.inqvisitor
       .populate("recruit.items.spacemarineId")

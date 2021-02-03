@@ -1,6 +1,8 @@
 const { Router } = require('express');
-const router = Router();
 const Spacemarine = require('../models/spacemarine');
+const auth = require('../middleware/auth');
+
+const router = Router();
 
 router.get('/', async (req, res) => {
     const platoonList = await Spacemarine.find();
@@ -20,7 +22,7 @@ router.get('/:id', async (req, res) => {
     })
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', auth, async (req, res) => {
     if (!req.query.allow) {
         return res.redirect('/')
     }
@@ -33,7 +35,7 @@ router.get('/:id/edit', async (req, res) => {
     })
 })
 
-router.post('/edit', async (req, res) => {
+router.post('/edit', auth, async (req, res) => {
     const { name, photo, id, platoonId, cost } = req.body;
 
     try {
@@ -44,7 +46,7 @@ router.post('/edit', async (req, res) => {
     }
 })
 
-router.post('/remove', async (req, res) => {
+router.post('/remove', auth, async (req, res) => {
     try {
         await Spacemarine.deleteOne({ _id: req.body.id });
         res.redirect('platoon');

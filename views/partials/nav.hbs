@@ -11,28 +11,38 @@
                 <li><a href="/">Home</a></li>
                 {{/if}}
 
-                {{#if isAdd}}
-                <li class="active"><a href="/add">Add</a></li>
-                {{else}}
-                <li><a href="/add">Add</a></li>
-                {{/if}}
-
                 {{#if isPlatoon}}
                 <li class="active"><a href="/platoon">Platoon</a></li>
                 {{else}}
                 <li><a href="/platoon">Platoon</a></li>
                 {{/if}}
 
-                {{#if isRecruit}}
-                <li class="active"><a href="/recruit">Recruit</a></li>
-                {{else}}
-                <li><a href="/recruit">Recruit</a></li>
-                {{/if}}
+                {{#if isAuth}}
+                    {{#if isAdd}}
+                        <li class="active"><a href="/add">Add</a></li>
+                    {{else}}
+                        <li><a href="/add">Add</a></li>
+                    {{/if}}
 
-                {{#if isCrusade}}
-                <li class="active"><a href="/crusade">Crusade</a></li>
+                    {{#if isRecruit}}
+                        <li class="active"><a href="/recruit">Recruit</a></li>
+                    {{else}}
+                        <li><a href="/recruit">Recruit</a></li>
+                    {{/if}}
+
+                    {{#if isCrusade}}
+                        <li class="active"><a href="/crusade">Crusade</a></li>
+                    {{else}}
+                        <li><a href="/crusade">Crusade</a></li>
+                    {{/if}}
+
+                    <li><a href="/login/logout">Exit</a></li>
                 {{else}}
-                <li><a href="/crusade">Crusade</a></li>
+                    {{#if isLogin}}
+                        <li class="active"><a href="/login">Login</a></li>
+                    {{else}}
+                        <li><a href="/login">Login</a></li>
+                    {{/if}}
                 {{/if}}
             </ul>
         </div>
