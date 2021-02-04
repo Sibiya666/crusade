@@ -32,4 +32,17 @@ router.post('/auth', async (req, res) => {
     });
 });
 
+router.post('/registration', async (req, res) => {
+    const { login, name, password, repeatPassword, email } = req.body;
+    
+    if (await Inqvisitor.findOne({email})) {
+        res.redirect('/login#registration')
+    } else {
+        const inqvisitor = new Inqvisitor({login, name, email, password, recruit:  { items: [] }});
+        await inqvisitor.save();
+        res.redirect('/login#auth')
+    }
+    // new 
+});
+
 module.exports = router;

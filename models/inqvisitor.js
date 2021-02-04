@@ -1,12 +1,19 @@
 const { Schema, model } = require("mongoose");
 
 const inqvisitorSchema = new Schema({
-  name: {
+  login: {
     type: String,
     required: true,
   },
 
+  name: String,
+
   email: {
+    type: String,
+    required: true,
+  },
+
+  password: {
     type: String,
     required: true,
   },

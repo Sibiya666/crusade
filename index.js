@@ -7,6 +7,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongodb-session')(session);
 const varMiddlevare = require('./middleware/var');
+const inqvisitorMiddlevare = require('./middleware/inqvisitor');
 
 const homeRoutes = require('./routes/home');
 const addRoutes = require('./routes/add');
@@ -32,7 +33,6 @@ const mongoSessionStore = new MongoStore({
     collection: 'session',
 })
 
-
 async function start() {
     try {
         await mongoose.connect(DB_URL, {
@@ -40,8 +40,6 @@ async function start() {
             useUnifiedTopology: true,
             useFindAndModify: false,
         });
-
-        userConect();
 
         app.listen(PORT, () => {
             console.log(`Server is runnig on ${PORT} port`)
@@ -63,6 +61,7 @@ app.use(session({
     store: mongoSessionStore
 }));
 app.use(varMiddlevare);
+app.use(inqvisitorMiddlevare)
 
 app.use('/', homeRoutes);
 app.use('/add', addRoutes);
@@ -80,12 +79,6 @@ async function userConect() {
         if (candidate) {
             return;
         }
-
-        const inqvisitor = new Inqvisitor({
-            email: 'pipin@mail.ru',
-            name: 'Pipin',
-            recruit: { items: [] }
-        });
 
         inqvisitor.save();
 
