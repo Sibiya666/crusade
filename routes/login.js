@@ -1,48 +1,81 @@
-const { Router } =  require('express');
-const Inqvisitor = require('../models/inqvisitor');
+const { Router } = require("express");
+const bcrypt = require("bcrypt");
+const Inquisitor = require("../models/inquisitor");
 
 const router = Router();
+const SALT_LENGTH = 10;
 
-router.get('/', (req, res) => {
-    res.render('login', {
-        isLogin: true,
-    })
+router.get("/", (req, res) => {
+  res.render("login", {
+    isLogin: true,
+    errorAuth: req.flash("errorAuth"),
+    errorReg: req.flash("errorReg"),
+  });
 });
 
-router.get('/logout', (req, res) => {
-    req.session.destroy(() => {
-        res.redirect('/login#auth');
+router.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.redirect("/login#auth");
+  });
+});
+
+router.post("/auth", async (req, res) => {
+  await userConect(req, res);
+});
+
+router.post("/registration", async (req, res) => {
+  const { login, name, password, repeatPassword, email } = req.body;
+
+  if (await Inquisitor.findOne({ email })) {
+    req.flash("errorReg", "This inquisitor exist");
+    res.redirect("/login#registration");
+  } else if (password !== repeatPassword) {
+    req.flash("errorReg", "Password do not match");
+    res.redirect("/login#registration");
+  } else {
+    const inquisitor = new Inquisitor({
+      login,
+      name,
+      email,
+      password: await bcrypt.hash(password, SALT_LENGTH),
+      recruit: { items: [] },
     });
+    await inquisitor.save();
+    res.redirect("/login#registration");
+  }
 });
 
-router.post('/auth', async (req, res) => {
-    req.session.inqvisitor = await Inqvisitor.findById('5fccae0e256d4523e0cb0eaf')
-    req.session.isAuth = true;
+async function userConect(req, res) {
+  try {
+    const { login, password } = req.body;
+    const candidate = await Inquisitor.findOne({ login });
 
-    req.session.save((err) => {
-        if (err) {
-            throw Error()
-        }
-
-        if(req.session.isAuth) {
-            res.redirect('/');
-        } else {
-            res.redirect('/login');
-        }
-    });
-});
-
-router.post('/registration', async (req, res) => {
-    const { login, name, password, repeatPassword, email } = req.body;
-    
-    if (await Inqvisitor.findOne({email})) {
-        res.redirect('/login#registration')
+    if (candidate) {
+      const areSame = await bcrypt.compare(password, candidate.password);
+      checkAreSame(areSame, req, res);
     } else {
-        const inqvisitor = new Inqvisitor({login, name, email, password, recruit:  { items: [] }});
-        await inqvisitor.save();
-        res.redirect('/login#auth')
+      req.flash("errorAuth", "User is not found");
+      res.redirect("/login#auth");
     }
-    // new 
-});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function checkAreSame(areSame, req, res) {
+  if (areSame) {
+    req.session.inquisitor = candidate;
+    req.session.isAuth = true;
+    req.session.save((err) => {
+      if (err) {
+        throw Error();
+      }
+      res.redirect("/");
+    });
+  } else {
+    req.flash("errorAuth", "Passowrd do not match");
+    res.redirect("/login#auth");
+  }
+}
 
 module.exports = router;

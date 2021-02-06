@@ -18,6 +18,7 @@
                 {{#if @root.isAuth}}
                     <a href="/platoon/{{_id}}/edit?allow=true">Worckout</a>
                     <form action="/recruit/add" method="POST">
+                        <input type="text" value="{{@root.csrfToken}}" name="_csrf" hidden>
                         <input type="text" name="id" value="{{_id}}" hidden>
                         <button class="btn">Recruit</button>
                     </form>

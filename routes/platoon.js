@@ -49,7 +49,7 @@ router.post('/edit', auth, async (req, res) => {
 router.post('/remove', auth, async (req, res) => {
     try {
         await Spacemarine.deleteOne({ _id: req.body.id });
-        res.redirect('platoon');
+        res.redirect('/');
     } catch (e) {
         console.log(e)
     }

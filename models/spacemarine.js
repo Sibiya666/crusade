@@ -18,9 +18,9 @@ const spacemarinSchema = new Schema({
     require: true,
   },
 
-  inqvisitorId: {
+  inquisitorId: {
     type: Schema.Types.ObjectId,
-    ref: "Inqvisitor",
+    ref: "Inquisitor",
   },
 });
 

@@ -12,7 +12,7 @@ router.get('/', auth, (req, res) => {
 
 router.post('/', auth, async (req, res) => {
     const { name, platoonId, photo, cost } = req.body
-    const spacemarine = new Spacemarine({ name, platoonId, photo, cost, inqvisitorId: req.inqvisitor });
+    const spacemarine = new Spacemarine({ name, platoonId, photo, cost, inquisitorId: req.inquisitor });
 
     try {
         await spacemarine.save();

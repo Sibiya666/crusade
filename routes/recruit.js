@@ -5,11 +5,11 @@ const auth = require('../middleware/auth');
 const router = Router();
 
 async function createOrder(req) {
-  const inqvisitor = await req.inqvisitor
+  const inquisitor = await req.inquisitor
     .populate("recruit.items.spacemarineId")
     .execPopulate();
 
-  const recruit = inqvisitor.recruit.items.map((item) => ({
+  const recruit = inquisitor.recruit.items.map((item) => ({
     ...item.spacemarineId._doc,
     count: item.count,
     id: item.spacemarineId._id,
@@ -30,7 +30,7 @@ router.get("/", auth, async (req, res) => {
 router.post("/add", auth, async (req, res) => {
   try {
     const spacemarine = await Spacemarine.findById(req.body.id);
-    req.inqvisitor.addToCrusade(spacemarine);
+    req.inquisitor.addToCrusade(spacemarine);
 
     res.redirect("/recruit");
   } catch (e) {
@@ -39,7 +39,7 @@ router.post("/add", auth, async (req, res) => {
 });
 
 router.delete("/remove/:id", auth, async (req, res) => {
-  req.inqvisitor.removeFromCrusade(req.params.id);
+  req.inquisitor.removeFromCrusade(req.params.id);
   res.status(200).json(await createOrder(req));
 });
 
