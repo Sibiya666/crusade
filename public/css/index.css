@@ -40,3 +40,10 @@ nav {
 .worckout-form {
     margin-bottom: 2rem;
 }
+
+.alert {
+    padding: .5em 1em;
+    border-radius: 4px;
+    color:crimson;
+    background-color: #cd5c5c99;
+}

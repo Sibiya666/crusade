@@ -1,12 +1,19 @@
 const { Schema, model } = require("mongoose");
 
-const inqvisitorSchema = new Schema({
-  name: {
+const inquisitorSchema = new Schema({
+  login: {
     type: String,
     required: true,
   },
 
+  name: String,
+
   email: {
+    type: String,
+    required: true,
+  },
+
+  password: {
     type: String,
     required: true,
   },
@@ -29,7 +36,7 @@ const inqvisitorSchema = new Schema({
   },
 });
 
-inqvisitorSchema.methods.addToCrusade = function (spacemarine) {
+inquisitorSchema.methods.addToCrusade = function (spacemarine) {
   const items = [...this.recruit.items];
   const index = items.findIndex(
     (element) => element.spacemarineId.toString() === spacemarine._id.toString()
@@ -49,7 +56,7 @@ inqvisitorSchema.methods.addToCrusade = function (spacemarine) {
   return this.save();
 };
 
-inqvisitorSchema.methods.removeFromCrusade = function (id) {
+inquisitorSchema.methods.removeFromCrusade = function (id) {
   let items = [...this.recruit.items];
 
   const index = items.findIndex(
@@ -68,9 +75,9 @@ inqvisitorSchema.methods.removeFromCrusade = function (id) {
   return this.save();
 };
 
-inqvisitorSchema.methods.clearRecruit = function () {
+inquisitorSchema.methods.clearRecruit = function () {
   this.recruit = { items: [] };
   return this.save();
 };
 
-module.exports = model("Inqvisitor", inqvisitorSchema);
+module.exports = model("Inquisitor", inquisitorSchema);

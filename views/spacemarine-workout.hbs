@@ -22,7 +22,8 @@
         <label for="url">Cost</label>
         <span class="helper-text" data-error="wrong" data-success="right">required field</span>
     </div>
-
+    
+    <input type="text" value="{{csrfToken}}" name="_csrf" hidden>
     <input class="hidden" type="text" name="id" value="{{spacemarine.id}}" hidden>
 
     <button class="btn waves-effect waves-light" type="submit" name="action">Submit</button>
@@ -30,5 +31,6 @@
 
 <form action="/platoon/remove" method="POST">
     <input type="text" name="id" value="{{spacemarine.id}}" hidden>
+    <input type="text" value="{{csrfToken}}" name="_csrf" hidden>
     <button type="submit" class="btn waves-effect waves-light" >DEMOTE</button>
 </form>

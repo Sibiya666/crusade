@@ -1,13 +1,15 @@
 const { Router } = require("express");
-const router = Router();
 const Crusade = require("../models/crusade");
+const auth = require('../middleware/auth');
 
-router.get("/", async (req, res) => {
+const router = Router();
+
+router.get("/", auth, async (req, res) => {
   try {
     const crusadeList = await Crusade.find({
-      "inqvisitor.inqvisitorId": req.inqvisitor._id,
+      "inquisitor.inquisitorId": req.inquisitor._id,
     })
-      .populate("inqvisitor.inqvisitorId");
+      .populate("inquisitor.inquisitorId");
 
     res.render("crusade", {
       isCrusade: true,
@@ -19,27 +21,27 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
-    const inqvisitor = await req.inqvisitor
+    const inquisitor = await req.inquisitor
       .populate("recruit.items.spacemarineId")
       .execPopulate();
 
-    const recruit = inqvisitor.recruit.items.map((item) => ({
+    const recruit = inquisitor.recruit.items.map((item) => ({
       count: item.count,
       spacemarine: { ...item.spacemarineId._doc },
     }));
 
     const crusade = new Crusade({
       recruit,
-      inqvisitor: {
-        name: req.inqvisitor.name,
-        inqvisitorId: req.inqvisitor,
+      inquisitor: {
+        name: req.inquisitor.name,
+        inquisitorId: req.inquisitor,
       },
     });
 
     await crusade.save();
-    await req.inqvisitor.clearRecruit();
+    await req.inquisitor.clearRecruit();
 
     res.redirect("crusade");
   } catch (e) {

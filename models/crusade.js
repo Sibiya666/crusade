@@ -11,11 +11,11 @@
             required: true
         }
     }],
-    inqvisitor: {
+    inquisitor: {
         name: String,
-        inqvisitorId: {
+        inquisitorId: {
             type: Schema.Types.ObjectId,
-            ref: 'Inqvisitor',
+            ref: 'Inquisitor',
             required: true
         }
     },
