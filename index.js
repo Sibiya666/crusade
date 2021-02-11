@@ -22,8 +22,10 @@ const recruitRoutes = require('./routes/recruit');
 const crusadeRoutes = require('./routes/crusade');
 const loginRoutes = require('./routes/login');
 
+const KEYS = require('./keys');
+
 const PORT = process.env.PORT || 3000;
-const DB_URL = 'mongodb+srv://sibiya666:ckFRrZV33Dck1G2u@cluster0.bg7mz.mongodb.net/spacemarine?retryWrites=true&w=majority';
+
 
 const hbs = expressHbs({
     defaultLayout: 'main',
@@ -32,7 +34,7 @@ const hbs = expressHbs({
 })
 
 const mongoSessionStore = new MongoStore({
-    uri: DB_URL,
+    uri: KEYS.DB_URI,
     collection: 'session',
 })
 
@@ -44,7 +46,7 @@ app.set('view engine', 'hbs');
 app.use(exppress.static(path.join(__dirname, 'public')));
 app.use(exppress.urlencoded({ extended: false }));
 app.use(session({
-    secret: 'someSecret',
+    secret: KEYS.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: mongoSessionStore
@@ -65,7 +67,7 @@ start();
 
 async function start() {
     try {
-        await mongoose.connect(DB_URL, {
+        await mongoose.connect(KEYS.DB_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false,
