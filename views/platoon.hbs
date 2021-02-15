@@ -16,7 +16,9 @@
             <div class="card-action flex-inline">
                 <a href="/platoon/{{_id}}">Bio</a>
                 {{#if @root.isAuth}}
-                    <a href="/platoon/{{_id}}/edit?allow=true">Worckout</a>
+                    {{#ifeq inquisitorId @root.inquisitorId}}
+                        <a href="/platoon/{{_id}}/workout?allow=true">Worckout</a>
+                    {{/ifeq}}
                     <form action="/recruit/add" method="POST">
                         <input type="text" value="{{@root.csrfToken}}" name="_csrf" hidden>
                         <input type="text" name="id" value="{{_id}}" hidden>
