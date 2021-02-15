@@ -1,5 +1,7 @@
 :root {
     --main-color:#182b53;
+    --second-color: #182b5338;
+    --alert-color: crimson;
 }
 
 nav {
@@ -44,6 +46,32 @@ nav {
 .alert {
     padding: .5em 1em;
     border-radius: 4px;
-    color:crimson;
+    color: var(--alert-color);
     background-color: #cd5c5c99;
 }
+
+.tabs .tab a {
+    color: var(--second-color);
+}
+
+.tabs .tab a:hover,
+.tabs .tab a.active {
+    color: var(--main-color);
+}
+
+.tabs .tab a:focus.active {
+    background-color: var(--second-color);
+}
+
+.tabs .indicator {
+    background-color: var(--main-color);
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    color: var(--main-color);
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+    color: var(--second-color);
+}
+

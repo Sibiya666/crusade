@@ -8,6 +8,9 @@ const inquisitorSchema = new Schema({
 
   name: String,
 
+  resetPasswordToken: String,
+  resetPasswordTokenExparation: Date,
+
   email: {
     type: String,
     required: true,

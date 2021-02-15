@@ -1,0 +1,20 @@
+<h2>Reset password</h2>
+
+{{#if error}}
+    <p class="alert">{{error}}</p>
+{{/if}}
+
+<form action="/login/reset" method="POST">
+    <div class="input-field">
+        <input id="email" name="email" type="text" class="validate" required>
+        <label for="email">Email</label>
+        <span class="helper-text" data-error="wrong" data-success="right">required field</span>
+    </div>
+    
+    <input type="text" value="{{csrfToken}}" name="_csrf" hidden>
+
+    <button class="btn waves-effect waves-light" type="submit" name="action">Reset
+        <i class="material-icons right"></i>
+    </button>
+</form>
+    
