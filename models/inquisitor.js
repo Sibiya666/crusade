@@ -7,6 +7,7 @@ const inquisitorSchema = new Schema({
   },
 
   name: String,
+  avatar: String,
 
   resetPasswordToken: String,
   resetPasswordTokenExparation: Date,

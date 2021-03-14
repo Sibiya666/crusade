@@ -36,6 +36,12 @@
                         <li><a href="/crusade">Crusade</a></li>
                     {{/if}}
 
+                    {{#if isProfile}}
+                        <li class="active"><a href="/profile">Profile</a></li>
+                    {{else}}
+                        <li><a href="/profile">Profile</a></li>
+                    {{/if}}
+
                     <li><a href="/login/logout">Exit</a></li>
                 {{else}}
                     {{#if isLogin}}
