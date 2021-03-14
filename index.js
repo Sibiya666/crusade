@@ -10,7 +10,9 @@ const hbsHelpers = require("./utils/hbs");
 
 const path = require("path");
 const csrf = require("csurf");
+const compression = require("compression");
 const flash = require("connect-flash");
+const helmet = require("helmet");
 
 const mongoose = require("mongoose");
 const MongoStore = require("connect-mongodb-session")(session);
@@ -63,6 +65,8 @@ app.use(
 app.use(multerMiddlevare.single("avatar"));
 app.use(csrf());
 app.use(flash());
+app.use(helmet());
+app.use(compression());
 app.use(varMiddlevare);
 app.use(inquisitorMiddlevare);
 
