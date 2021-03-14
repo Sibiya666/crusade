@@ -6,7 +6,7 @@ const expressHbs = require("express-handlebars");
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
-const hbsHelpers = require('./utils/hbs');
+const hbsHelpers = require("./utils/hbs");
 
 const path = require("path");
 const csrf = require("csurf");
@@ -17,6 +17,8 @@ const MongoStore = require("connect-mongodb-session")(session);
 
 const varMiddlevare = require("./middleware/var");
 const inquisitorMiddlevare = require("./middleware/inquisitor");
+const pageNotFoundMiddlevare = require("./middleware/404");
+const multerMiddlevare = require("./middleware/file");
 
 const homeRoutes = require("./routes/home.route");
 const addRoutes = require("./routes/add.route");
@@ -24,6 +26,7 @@ const platoonRoutes = require("./routes/platoon.route");
 const recruitRoutes = require("./routes/recruit.route");
 const crusadeRoutes = require("./routes/crusade.route");
 const loginRoutes = require("./routes/login.route");
+const profileRoutes = require("./routes/profile.route");
 
 const KEYS = require("./keys");
 
@@ -47,6 +50,7 @@ app.engine("hbs", hbs);
 app.set("view engine", "hbs");
 
 app.use(exppress.static(path.join(__dirname, "public")));
+app.use(exppress.static(path.join(__dirname, "assets")));
 app.use(exppress.urlencoded({ extended: false }));
 app.use(
   session({
@@ -56,6 +60,7 @@ app.use(
     store: mongoSessionStore,
   })
 );
+app.use(multerMiddlevare.single("avatar"));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddlevare);
@@ -63,10 +68,13 @@ app.use(inquisitorMiddlevare);
 
 app.use("/", homeRoutes);
 app.use("/add", addRoutes);
-app.use("/platoon", platoonRoutes);
-app.use("/recruit", recruitRoutes);
 app.use("/crusade", crusadeRoutes);
 app.use("/login", loginRoutes);
+app.use("/platoon", platoonRoutes);
+app.use("/profile", profileRoutes);
+app.use("/recruit", recruitRoutes);
+
+app.use(pageNotFoundMiddlevare);
 
 start();
 
